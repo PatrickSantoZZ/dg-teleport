@@ -25,25 +25,6 @@ module.exports = function DGTeleport(mod) {
         return require(data);
     }
 
-    const gui = {
-        parse(array, title, d = '') {
-            for (let i = 0; i < array.length; i++) {
-                if (d.length >= 16000) {
-                    d += `Gui data limit exceeded, some values may be missing.`;
-                    break;
-                }
-                if (array[i].command) d += `<a href="admincommand:/@${array[i].command}">${array[i].text}</a>`;
-                else if (!array[i].command) d += `${array[i].text}`;
-                else continue;
-            }
-            mod.toClient('S_ANNOUNCE_UPDATE_NOTIFICATION', 1, {
-                id: 0,
-                title: title,
-                body: d,
-            });
-        },
-    };
-
     function tpList() {
         if (Object.keys(dungeons).length > 0) {
             let list = [];
@@ -53,7 +34,6 @@ module.exports = function DGTeleport(mod) {
                     command: `dg ${x.dg[0]}`,
                 });
             });
-            gui.parse(list, `<font color="#E0B0FF">Dungeon Teleport List</font>`);
             list = [];
         }
     }
